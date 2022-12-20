@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>dsaskaboutproduct</name>
+	<displayName><![CDATA[DS: Ask about product]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Customer cand send question to store service about product]]></description>
+	<author><![CDATA[Dark-Side.pro]]></author>
+	<tab><![CDATA[administration]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>

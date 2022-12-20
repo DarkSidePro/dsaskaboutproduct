@@ -1,0 +1,7 @@
+{shop_url}
+
+Witaj,
+
+Klient {sender}, zadał pytanie o produkt {productName}.
+
+Wiadomość klienta: {message}
