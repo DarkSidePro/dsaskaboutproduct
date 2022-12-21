@@ -2,6 +2,6 @@
 
 Witaj,
 
-Klient {sender}, zadał pytanie o produkt {productName}.
+Klient {sender}, telefon: {phone}, zadał pytanie o produkt {productName}.
 
 Wiadomość klienta: {message}
