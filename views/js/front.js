@@ -28,21 +28,20 @@
 $('#dsaskaboutproduct_form').on('submit', function(e) {
     e.preventDefault();
     
-    $.ajax({
-		type: 'POST',
-		url:  window.location.protocol + "//" + window.location.host + '/module/dsaskaboutproduct/SendMail',
-		async: true,
-		cache: false,
-		data: new FormData(this),
-		success: function(data)
-		{           
+	$.ajax({
+        url: window.location.protocol + "//" + window.location.host + '/module/dsaskaboutproduct/SendMail',
+        data: $('#dsaskaboutproduct_form').serialize(),
+        processData: false,
+        type: 'POST',
+        success: function ( data ) {
             array = JSON.parse(data);
 
             if (array.success == true) {
                 $('#exampleModalCenter').modal('hide');
+				$('#dsaskaboutproduct_form')[0].reset();
             } else {
                 $('#dsaskaboutproduct_response').html(array.msg);
             }
-		}
-	});
+        }
+    });
 })
