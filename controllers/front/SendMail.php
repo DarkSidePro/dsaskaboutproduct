@@ -16,7 +16,7 @@
 * @package   dsafillate
 */
 
-class DsdynamicpriceSaveConfigurationModuleFrontController extends ModuleFrontController
+class DsaskaboutproductSendMailModuleFrontController extends ModuleFrontController
 {
     public $guestAllowed = true;
 
@@ -37,31 +37,27 @@ class DsdynamicpriceSaveConfigurationModuleFrontController extends ModuleFrontCo
 
     public function postProcess()
     {
-        if (!Tools::isSubmit('dsaskaboutproduct')) {
-            echo Tools::jsonEncode(array('msg' => $this->l('Something is wrong with form.')));
-            return;
-        }
-        
-        if (!Tools::isSubmit('dsaskaboutproduct_product_id')) {
-            echo Tools::jsonEncode(array('msg' => $this->l('Product ID is missing.')));
+        if (!Tools::isSubmit('product_id')) {
+            echo Tools::jsonEncode(array('msg' => $this->l('Product ID is missing.'), 'success' => false));
             return;
         }
 
-        if (!Tools::isSubmit('dsaskaboutproduct_email') || !Tools::isSubmit('dsaskaboutproduct_phone')) {
-            echo Tools::jsonEncode(array('msg' => $this->l('Phone or email is required.')));
+        if (!Tools::isSubmit('email')) {
+            echo Tools::jsonEncode(array('msg' => $this->l('Email field is required.'), 'success' => false));
             return;
         }
 
-        if (!Tools::isSubmit('dsaskaboutproduct_message')) {
-            echo Tools::jsonEncode(array('msg' => $this->l('Message is required.')));
+        if (!Tools::isSubmit('message')) {
+            echo Tools::jsonEncode(array('msg' => $this->l('Message field is required.'), 'success' => false));
             return;
         }
 
-        $productID = Tools::getValue('dsaskaboutproduct_product_id');
-        $sender = Tools::getValue('dsaskaboutproduct_email') ?? Tools::getValue('dsaskaboutproduct_phone');;
-        $message = Tools::getValue('dsaskaboutproduct_message');
+        $productID = Tools::getValue('product_id');
+        $sender = Tools::getValue('email');
+        $phone = Tools::getValue('phone');
+        $message = Tools::getValue('message');
 
-        $this->sendMail($productID, $sender, $message);
+        $this->sendMail($productID, $sender, $phone, $message);
 
         echo Tools::jsonEncode(array('msg' => $this->l('Your message was sent.'), 'success' => true));
         return;
@@ -72,18 +68,18 @@ class DsdynamicpriceSaveConfigurationModuleFrontController extends ModuleFrontCo
         $sql = new DbQuery;
         $sql->select('name')
             ->from('product_lang')
-            ->where('id_lang = 1');
+            ->where('id_lang = 1 AND id_product = ' . $productID);
         
         $result = Db::getInstance()->executeS($sql); 
 
         return $result;
     }
 
-    protected function sendMail($productID, $sender, $message)
+    protected function sendMail($productID, $sender, $phone, $message)
     {
         $date = new DateTime('now');
         $dateString = $date->format('Y-m-d H:i:s');
-        $productName = $this->getProductName($productID);
+        $productName = $this->getProductName($productID)[0]['name'];
 
         Mail::Send(
             (int)(Configuration::get('PS_LANG_DEFAULT')), // defaut language id
@@ -92,7 +88,8 @@ class DsdynamicpriceSaveConfigurationModuleFrontController extends ModuleFrontCo
             array(
                 '{sender}' => $sender, // sender email or phone address
                 '{message}' => $message, // email content
-                '{productName}' => $productName
+                '{productName}' => $productName,
+                '{phone}' => $phone
             ),
             Configuration::get('PS_SHOP_EMAIL'), // receiver email address
             NULL, //receiver name
