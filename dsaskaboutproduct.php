@@ -63,7 +63,7 @@ class Dsaskaboutproduct extends Module
 
         return parent::install() &&
             $this->registerHook('header') &&
-            $this->registerHook('displayBackOfficeHeader')
+            $this->registerHook('displayBackOfficeHeader') &&
             $this->registerHook('displayReassurance');      
     }
 
@@ -106,7 +106,7 @@ class Dsaskaboutproduct extends Module
         $this->context->controller->addCSS($this->_path.'/views/css/front.css');
     }
 
-    public function displayReassurance()
+    public function hookDisplayReassurance()
     {
         $output = $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayReassurance.tpl');
 
