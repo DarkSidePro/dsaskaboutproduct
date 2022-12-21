@@ -20,19 +20,19 @@
             </div>
             <div class="col-lg-7">
                 <form method="POST" id="dsaskaboutproduct_form">
-                    <input type="hidden" name="dsaskaboutproduct">
-                    <input type='hidden' name="dsaskaboutproduct_product_id" value="{$product.id}">
+                    <input type="hidden" name="dsaskaboutproductForm_id" value="1">
+                    <input type='hidden' name="product_id" value="{$product.id}">
                     <div class="form-group">
                         <label>{l s="E-mail" mod='dsaskaboutproduct'}</label>
-                        <input type="email" class="form-control" required name="dsaskaboutproduct_email">
+                        <input type="email" class="form-control" required name="email" id="dsaskaboutproduct_form_email">
                     </div>
                     <div class="form-group">
                         <label>{l s="Phone" mod='dsaskaboutproduct'}</label>
-                        <input type="phone" class="form-control" name="dsaskaboutproduct_phone">
+                        <input type="number" class="form-control" name="phone" id="dsaskaboutproduct_form_phone">
                     </div>
                     <div class="form-group">
                         <label>{l s="Message" mod='dsaskaboutproduct'}</label>
-                        <textarea class="form-control" required name="dsaskaboutproduct_message"></textarea>
+                        <textarea class="form-control" required name="message"  id="dsaskaboutproduct_form_message"></textarea>
                     </div>
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">{l s="Send" mod='dsaskaboutproduct'}</button>
