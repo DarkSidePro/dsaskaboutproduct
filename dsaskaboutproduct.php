@@ -108,8 +108,12 @@ class Dsaskaboutproduct extends Module
 
     public function hookDisplayReassurance()
     {
-        $output = $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayReassurance.tpl');
+        $controller = Context::getContext()->controller->php_self;
 
-        return $output;
+        if ($controller === 'product') {
+            $output = $this->context->smarty->fetch($this->local_path.'views/templates/hook/displayReassurance.tpl');
+
+            return $output;
+        }
     }
 }
